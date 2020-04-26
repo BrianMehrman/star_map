@@ -1,0 +1,23 @@
+.app {
+  display: flex;
+  justify-content: center;
+}
+
+.column {
+  flex-direction: column;
+
+  > div {
+    margin-top: 1em;
+
+  }
+}
+
+.star {
+  color: #f1d1a5;
+  font-size: 2em;
+}
+#space {
+  background-color: #222222;
+  width: 600px;
+  height: 400px;
+}
