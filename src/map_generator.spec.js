@@ -1,4 +1,4 @@
-import MapGenerator, { mapRender } from "./map_generator";
+import MapGenerator from "src/map_generator";
 
 describe("MapGenerator", function() {
   describe(".generate", function() {

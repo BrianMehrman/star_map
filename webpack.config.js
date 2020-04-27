@@ -2,6 +2,8 @@ const path = require("path");
 
 module.exports = {
   context: __dirname,
+  devtool: 'inline-source-map',
+  mode: "development",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
@@ -24,5 +26,10 @@ module.exports = {
         ]
       }
     ]
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
   }
 };
