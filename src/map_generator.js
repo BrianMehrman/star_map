@@ -15,7 +15,6 @@ function randInt(min = 0, max = 10) {
 //   };
 // }
 
-
 /*
 
 Creates a placement map for a 2D plane for objects of any size represented as a unit
@@ -36,13 +35,11 @@ const MapGenerator = class {
     const x = randInt(0, this.mapWidth);
     const y = randInt(0, this.mapHeight);
 
-    const point = `${x},${y}`;
-    if (this.genMap[point] !== undefined) {
+    if (this.genMap[`${x},${y}`] !== undefined) {
       return this.nextCoordinate();
     }
-    console.log(`nextCoordinate#point: ${point}`);
 
-    return point;
+    return [x, y];
   }
 
   generate() {
@@ -50,15 +47,19 @@ const MapGenerator = class {
 
     for (let i = 0; i < this.objectCount; i += 1) {
       iterationCount += 1;
-      const point = this.nextCoordinate();
-      console.log(`point: ${point}`);
-      if (point === null) {
+      const [x, y] = this.nextCoordinate();
+      if (x === null || y == null) {
         console.error(
           "Grid is full could not find a place to put more objects"
         );
         break;
       }
-      this.genMap[point] = { size: 1 };
+      this.genMap[`${x},${y}`] = {
+        size: 1,
+        step: randInt(1, 10),
+        x,
+        y,
+      };
     }
     return this.genMap;
   }

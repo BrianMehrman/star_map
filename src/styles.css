@@ -15,8 +15,12 @@
 .star {
   color: #f1d1a5;
   font-size: 2em;
+  position: absolute;
 }
+
 #space {
+  overflow: hidden;
+  position: relative;
   background-color: #222222;
   width: 600px;
   height: 400px;
