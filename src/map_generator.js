@@ -54,9 +54,9 @@ const MapGenerator = class {
         );
         break;
       }
+
       this.genMap[`${x},${y}`] = {
-        size: 1,
-        step: randInt(1, 10),
+        size: randInt(1, 10),
         x,
         y,
       };

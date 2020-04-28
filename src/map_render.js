@@ -13,10 +13,12 @@ const mapRender = (map, elementId = "space") => {
       space.appendChild(star);
     }
 
+    star.style.fontSize = `${cell.size + 3}px`;
     star.style.transform = `translate(${cell.x}px, ${cell.y}px)`;
 
     return {
       ...cell,
+      step: 11 - cell.size,
       star,
     };
   });
