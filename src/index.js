@@ -2,52 +2,68 @@ import mapRender from "src/map_render";
 import MapGenerator from "src/map_generator";
 import "./styles.css";
 
-// const startLoop = (callback, interval = 200) => {
-//   window.loop = setInterval(callback, interval);
-//   return setInterval(callback, interval);
-// };
+let animationLoopID;
 
-// const stopLoop = () => clearInterval(window.loop);
+const ONCLICK = "click";
 
-let globalID;
+const control_bar_elem = document.getElementById("control-bar");
+
+const addButton = (name, callback) => {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.appendChild(document.createTextNode(name));
+  button.addEventListener(ONCLICK, callback);
+
+  control_bar_elem.appendChild(button);
+  return button;
+};
 
 const repeatOften = (callback) => {
   const wrapper = () => {
     callback();
-    globalID = requestAnimationFrame(wrapper);
+    animationLoopID = requestAnimationFrame(wrapper);
   };
   return wrapper;
 };
 
 const startLoop = (callback) => {
-  const wrapper = repeatOften(callback);
-  globalID = requestAnimationFrame(wrapper);
+  if (!animationLoopID) {
+    const wrapper = repeatOften(callback);
+    animationLoopID = requestAnimationFrame(wrapper);
+  }
 };
 
 const stopLoop = () => {
-  cancelAnimationFrame(globalID);
+  cancelAnimationFrame(animationLoopID);
+  animationLoopID = null;
+};
+
+const incrementMap = (starMap) => () => {
+  Object.keys(starMap).forEach((key) => {
+    const cell = starMap[key];
+    if (cell.x > 640) {
+      cell.x = -40;
+    } else {
+      cell.x += cell.step || -1;
+    }
+  });
+  starMap = mapRender(starMap, "space");
+};
+
+const initStarMap = () => {
+  const gen = new MapGenerator(100, 600, 400);
+  let aMap = gen.generate();
+
+  return mapRender(aMap, "space");
 };
 
 // Add stars to #space element
 (function () {
-  const gen = new MapGenerator(100, 600, 400);
-  let aMap = gen.generate();
-
-  aMap = mapRender(aMap, "space");
-
-  const increment = () => {
-    Object.keys(aMap).forEach((key) => {
-      const cell = aMap[key];
-      if (cell.x > 640) {
-        cell.x = -40;
-      } else {
-        cell.x += cell.step || -1;
-      }
-    });
-    aMap = mapRender(aMap, "space");
-  };
-  // on timer increment stars
-  startLoop(increment);
+  const starMap = initStarMap();
+  const incrementHandler = incrementMap(starMap);
+  // add start & stop buttons
+  addButton("start", () => startLoop(incrementHandler));
+  addButton("stop", () => stopLoop());
 })();
 
 /* TODO:

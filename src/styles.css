@@ -6,10 +6,9 @@
 .column {
   flex-direction: column;
 
-  > div {
-    margin-top: 1em;
-
-  }
+}
+.column  > div {
+  margin-top: 1em;
 }
 
 .star {
@@ -18,10 +17,26 @@
   position: absolute;
 }
 
+#header {
+  margin: 1em 0;
+}
+
 #space {
   overflow: hidden;
   position: relative;
   background-color: #222222;
   width: 600px;
   height: 400px;
+  border-radius: 2px;
+}
+
+#control-bar {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+#control-bar button {
+  padding: 0.5em 1em;
+  margin: 0 0.5em;
 }

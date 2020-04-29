@@ -18,7 +18,7 @@ const mapRender = (map, elementId = "space") => {
 
     return {
       ...cell,
-      step: 11 - cell.size,
+      step: cell.size + 8,
       star,
     };
   });
