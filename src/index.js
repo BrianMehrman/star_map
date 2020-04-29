@@ -1,11 +1,18 @@
 import mapRender from "src/map_render";
 import MapGenerator from "src/map_generator";
 import "./styles.css";
-
-let animationLoopID;
+import shipImage from "./images/rocket.svg";
 
 const ONCLICK = "click";
+const WIDTH = 600;
+const HEIGHT = 400;
+const STAR_COUNT = 100;
+const SCREEN_BUFFER = 40;
 
+const LEFT_EDGE = -1 * SCREEN_BUFFER;
+const RIGHT_EDGE = WIDTH + SCREEN_BUFFER;
+
+let animationLoopID;
 const control_bar_elem = document.getElementById("control-bar");
 
 const addButton = (name, callback) => {
@@ -18,18 +25,23 @@ const addButton = (name, callback) => {
   return button;
 };
 
-const repeatOften = (callback) => {
-  const wrapper = () => {
+const addObject = (obj, domId) => {
+  const location = document.getElementById(domId);
+  location.appendChild(obj);
+};
+
+const repeatAnimationLoop = (callback) => {
+  const wrappedCallback = () => {
     callback();
-    animationLoopID = requestAnimationFrame(wrapper);
+    animationLoopID = requestAnimationFrame(wrappedCallback);
   };
-  return wrapper;
+  return wrappedCallback;
 };
 
 const startLoop = (callback) => {
   if (!animationLoopID) {
-    const wrapper = repeatOften(callback);
-    animationLoopID = requestAnimationFrame(wrapper);
+    const wrappedCallback = repeatAnimationLoop(callback);
+    animationLoopID = requestAnimationFrame(wrappedCallback);
   }
 };
 
@@ -41,17 +53,17 @@ const stopLoop = () => {
 const incrementMap = (starMap) => () => {
   Object.keys(starMap).forEach((key) => {
     const cell = starMap[key];
-    if (cell.x > 640) {
-      cell.x = -40;
+    if (cell.x < LEFT_EDGE) {
+      cell.x = RIGHT_EDGE;
     } else {
-      cell.x += cell.step || -1;
+      cell.x -= cell.step || 1;
     }
   });
   starMap = mapRender(starMap, "space");
 };
 
 const initStarMap = () => {
-  const gen = new MapGenerator(100, 600, 400);
+  const gen = new MapGenerator(STAR_COUNT, WIDTH, HEIGHT);
   let aMap = gen.generate();
 
   return mapRender(aMap, "space");
@@ -64,8 +76,10 @@ const initStarMap = () => {
   // add start & stop buttons
   addButton("start", () => startLoop(incrementHandler));
   addButton("stop", () => stopLoop());
-})();
 
-/* TODO:
-  - onces a star leave field of view queue up creation of new star to left of screen
-*/
+  const ship = document.createElement("img");
+  ship.id = "ship";
+  ship.src = shipImage;
+
+  addObject(ship, "space");
+})();

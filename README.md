@@ -2,6 +2,7 @@
 
 This is a simple JS app to learn and test the event loop and promises
 
+![alt 'space image'](./space.gif)
 
 ## TODO
 

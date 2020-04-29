@@ -2,34 +2,35 @@ const path = require("path");
 
 module.exports = {
   context: __dirname,
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   mode: "development",
   entry: "./src/index.js",
   output: {
     filename: "main.js",
-    path: path.resolve(__dirname, "dist")
+    path: path.resolve(__dirname, "dist"),
   },
   resolve: {
     mainFields: ["module", "webpack", "web", "main"],
     extensions: [".js", ".jsx", ".json", "*"],
     alias: {
-      src: path.resolve(__dirname, "src")
-    }
+      src: path.resolve(__dirname, "src"),
+    },
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          "css-loader"
-        ]
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ["file-loader"],
+      },
+    ],
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     compress: true,
-    port: 9000
-  }
+    port: 9000,
+  },
 };
