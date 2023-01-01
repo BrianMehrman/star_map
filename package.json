@@ -28,15 +28,15 @@
     "karma-cli": "^2.0.0",
     "karma-jasmine": "^3.1.1",
     "karma-jasmine-diff-reporter": "^2.0.0",
-    "karma-webpack": "^4.0.2",
+    "karma-webpack": "^5.0.0",
     "prettier": "^2.0.5",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "autoprefixer": "^9.7.6",
-    "css-loader": "^3.5.3",
+    "css-loader": "^6.7.3",
     "es6-shim": "^0.35.5",
     "style-loader": "^1.2.0"
   }
